@@ -1,20 +1,23 @@
 import backtrader as bt
 
+# Strategy: Calendar Spread Alpha Strategy 17
+# Target Ticker: NVDA
+
 class CalendarSpreadAlphaStrategy17(bt.Strategy):
     params = (
+        ('ticker', 'NVDA'),
         ('Front_DTE_value', 7),
         ('Back_DTE_value', 30),
         ('IV_Ratio_Min_value', 1.2),
     )
 
     def __init__(self):
+        self.dataclose = self.datas[0].close
 
     def next(self):
         if not self.position:
-            # Entry Logic
-            if True and True:
+            if self.dataclose[0] > self.ema[0] if hasattr(self, 'ema') else True:
                 self.buy()
         else:
-            # Exit Logic
-            if False or False:
+            if self.rsi[0] > 70 if hasattr(self, 'rsi') else False:
                 self.close()
